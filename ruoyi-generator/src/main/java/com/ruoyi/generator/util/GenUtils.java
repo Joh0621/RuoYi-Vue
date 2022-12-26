@@ -42,6 +42,7 @@ public class GenUtils
         column.setJavaField(StringUtils.toCamelCase(columnName));
         // 设置默认类型
         column.setJavaType(GenConstants.TYPE_STRING);
+        column.setQueryType(GenConstants.QUERY_EQ);
 
         if (arraysContains(GenConstants.COLUMNTYPE_STR, dataType) || arraysContains(GenConstants.COLUMNTYPE_TEXT, dataType))
         {
@@ -112,10 +113,15 @@ public class GenUtils
         {
             column.setHtmlType(GenConstants.HTML_SELECT);
         }
-        // 文件字段设置上传控件
+        // 图片字段设置图片上传控件
         else if (StringUtils.endsWithIgnoreCase(columnName, "image"))
         {
-            column.setHtmlType(GenConstants.HTML_UPLOAD_IMAGE);
+            column.setHtmlType(GenConstants.HTML_IMAGE_UPLOAD);
+        }
+        // 文件字段设置文件上传控件
+        else if (StringUtils.endsWithIgnoreCase(columnName, "file"))
+        {
+            column.setHtmlType(GenConstants.HTML_FILE_UPLOAD);
         }
         // 内容字段设置富文本控件
         else if (StringUtils.endsWithIgnoreCase(columnName, "content"))
@@ -146,8 +152,7 @@ public class GenUtils
     {
         int lastIndex = packageName.lastIndexOf(".");
         int nameLength = packageName.length();
-        String moduleName = StringUtils.substring(packageName, lastIndex + 1, nameLength);
-        return moduleName;
+        return StringUtils.substring(packageName, lastIndex + 1, nameLength);
     }
 
     /**
@@ -160,8 +165,7 @@ public class GenUtils
     {
         int lastIndex = tableName.lastIndexOf("_");
         int nameLength = tableName.length();
-        String businessName = StringUtils.substring(tableName, lastIndex + 1, nameLength);
-        return businessName;
+        return StringUtils.substring(tableName, lastIndex + 1, nameLength);
     }
 
     /**
